@@ -1,10 +1,12 @@
 package com.habibfr.suitmedia_test_mobile.view.first
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.habibfr.suitmedia_test_mobile.databinding.ActivityFirstBinding
+import com.habibfr.suitmedia_test_mobile.view.second.SecondActivity
 
 class FirstActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFirstBinding
@@ -38,6 +40,20 @@ class FirstActivity : AppCompatActivity() {
 
                     txtResult.setTextColor(color)
                     txtResult.visibility = View.VISIBLE
+                }
+            }
+
+
+            btnNext.setOnClickListener {
+                val username = etName.text.toString().trim()
+                if (username.isEmpty()) {
+                    txtResult.text = "Username masih kosong!"
+                    txtResult.setTextColor(Color.RED)
+                    txtResult.visibility = View.VISIBLE
+                } else {
+                    val intent = Intent(this@FirstActivity, SecondActivity::class.java)
+                    intent.putExtra("username", username)
+                    startActivity(intent)
                 }
             }
         }
