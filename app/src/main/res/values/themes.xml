@@ -6,4 +6,14 @@
     </style>
 
     <style name="Theme.Suitmedia_test_mobile" parent="Base.Theme.Suitmedia_test_mobile" />
+
+    <style name="PrimaryButton" parent="Widget.Material3.Button">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="backgroundTint">@color/hijau</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Small</item>
+    </style>
 </resources>
+
