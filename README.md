@@ -18,8 +18,8 @@ to demonstrate proficiency in Android app development.
 
 ## Setup App Development Environment
 
-1. Clone this repository to a folder on your computer using git
-   clone https://github.com/habibfr/user-pref-pagination.git.
+1. Clone this repository to a folder on your computer using `git
+   clone https://github.com/habibfr/user-pref-pagination.git`.
 2. Open the project in Android Studio.
 3. Ensure the Gradle build is successful by going to Build > Make Module "App". You might need to
    install the required Android SDK via Tools > SDK Manager first.
@@ -29,11 +29,18 @@ to demonstrate proficiency in Android app development.
 7. Enjoy the app! :tada:
 
 ## Demo
+<a href="https://drive.google.com/drive/folders/14Gvk4_v0gLU3Ibxh6Jniof7vKrJS91UB?usp=sharing">Lihat</a>
 
-<table>
-  <tr>
-    <td>
-      <video src="" controls></video>
-    </td>
-  </tr>
-</table>
+[//]: # (<table>)
+
+[//]: # (  <tr>)
+
+[//]: # (    <td>)
+
+[//]: # (      <video src="" controls></video>)
+
+[//]: # (    </td>)
+
+[//]: # (  </tr>)
+
+[//]: # (</table>)
