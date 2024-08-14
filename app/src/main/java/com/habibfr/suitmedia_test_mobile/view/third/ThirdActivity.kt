@@ -35,23 +35,12 @@ class ThirdActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         with(binding) {
-
             setSupportActionBar(topAppBar)
             topAppBar.setNavigationOnClickListener {
                 onBackPressed()
-
             }
 
-            rvUser.layoutManager = LinearLayoutManager(this@ThirdActivity)
-
-
-            getData()
-
-            swipeRefreshLayout.setOnRefreshListener {
-                getData()
-                swipeRefreshLayout.isRefreshing = false
-            }
-
+            userAdapter = UserAdapter()
             userAdapter.setOnItemClickCallback(object : UserAdapter.OnItemClickCallback {
                 override fun onItemClicked(user: User) {
                     user.firstName?.let {
@@ -63,24 +52,28 @@ class ThirdActivity : AppCompatActivity() {
                     }
                 }
             })
+
+            rvUser.layoutManager = LinearLayoutManager(this@ThirdActivity)
+            rvUser.adapter = userAdapter.withLoadStateFooter(
+                footer = LoadingStateAdapter { userAdapter.retry() }
+            )
+
+            getData()
+
+            srlRefresh.setOnRefreshListener {
+                getData()
+                srlRefresh.isRefreshing = false
+            }
         }
     }
 
     private fun getData() {
-        userAdapter = UserAdapter()
-        binding.rvUser.adapter = userAdapter.withLoadStateFooter(
-            footer = LoadingStateAdapter { userAdapter.retry() }
-        )
-
-        // Show the loading animation initially
         binding.progressBar.visibility = View.VISIBLE
 
-        // Simulate data loading delay using a coroutine
         lifecycleScope.launch {
-            delay(1000) // Replace with actual data loading
+            delay(1000)
             thirdViewModel.usersPaginate.observe(this@ThirdActivity) { pagingData ->
                 userAdapter.submitData(lifecycle, pagingData)
-                // Hide the loading animation when data is loaded
                 binding.progressBar.visibility = View.GONE
             }
         }

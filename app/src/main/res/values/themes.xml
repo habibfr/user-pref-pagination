@@ -1,9 +1,9 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Suitmedia_test_mobile" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="android:fontFamily">@font/poppins_medium</item>
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/hijau</item>
     </style>
 
     <style name="Theme.Suitmedia_test_mobile" parent="Base.Theme.Suitmedia_test_mobile" />
@@ -11,9 +11,9 @@
     <style name="PrimaryButton" parent="Widget.Material3.Button">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingTop">14dp</item>
         <item name="backgroundTint">@color/hijau</item>
-        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingBottom">14dp</item>
         <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Small</item>
     </style>
 </resources>

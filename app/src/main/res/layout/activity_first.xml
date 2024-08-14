@@ -21,57 +21,57 @@
     <EditText
         android:id="@+id/et_name"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/rounded_edittext"
+        android:hint="Name"
         android:inputType="text"
         android:maxLines="5"
-        android:layout_marginBottom="20dp"
-        android:paddingVertical="18dp"
         android:paddingHorizontal="12dp"
-        android:hint="Name"
-        android:background="@drawable/rounded_edittext"
-        android:layout_height="wrap_content" />
+        android:paddingVertical="14dp" />
 
     <EditText
         android:id="@+id/et_palindrome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_edittext"
+        android:hint="Palindrome"
         android:inputType="text"
         android:maxLines="5"
-        android:layout_width="match_parent"
-        android:paddingVertical="18dp"
         android:paddingHorizontal="12dp"
-        android:hint="Palindrome"
-        android:background="@drawable/rounded_edittext"
-        android:layout_height="wrap_content" />
+        android:paddingVertical="14dp" />
 
     <TextView
         android:id="@+id/txt_result"
         android:layout_width="match_parent"
-        android:textColor="@color/white"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:visibility="gone"
-        android:textSize="16dp"
-        android:text="Result"
         android:gravity="center"
-        android:layout_height="wrap_content"/>
+        android:text="Result"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:visibility="gone" />
 
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_check"
-        android:layout_marginTop="30dp"
+        style="@style/PrimaryButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:layout_marginBottom="5dp"
-        android:paddingVertical="16dp"
+        android:paddingVertical="12dp"
         android:text="CHECK"
-        style="@style/PrimaryButton"
         app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_next"
+        style="@style/PrimaryButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="5dp"
-        android:paddingVertical="16dp"
-        style="@style/PrimaryButton"
+        android:paddingVertical="12dp"
         android:text="NEXT"
         app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium" />
 
