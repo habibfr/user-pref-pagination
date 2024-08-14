@@ -4,12 +4,18 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.habibfr.suitmedia_test_mobile.databinding.ActivityFirstBinding
+import com.habibfr.suitmedia_test_mobile.view.factory.ViewModelFactory
 import com.habibfr.suitmedia_test_mobile.view.second.SecondActivity
+import com.habibfr.suitmedia_test_mobile.view.second.SharedViewModel
 
 class FirstActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFirstBinding
+    private val sharedViewModel: SharedViewModel by viewModels {
+        ViewModelFactory.getInstance(this@FirstActivity)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +58,10 @@ class FirstActivity : AppCompatActivity() {
                     txtResult.visibility = View.VISIBLE
                 } else {
                     val intent = Intent(this@FirstActivity, SecondActivity::class.java)
-                    intent.putExtra("username", username)
+//                    sharedViewModel.editDataUser(UserModel(username, ""))
+//                    intent.putExtra("username", username)
+
+                    sharedViewModel.setName(username)
                     startActivity(intent)
                 }
             }
