@@ -11,7 +11,7 @@ data class UsersResponse(
     val total: Int? = null,
 
     @field:SerializedName("data")
-    val data: List<DataUser?>? = emptyList(),
+    val data: List<User> = emptyList(),
 
     @field:SerializedName("page")
     val page: Int? = null,
@@ -20,7 +20,7 @@ data class UsersResponse(
     val totalPages: Int? = null,
 )
 
-data class DataUser(
+data class User(
 
     @field:SerializedName("last_name")
     val lastName: String? = null,

@@ -5,20 +5,21 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
-import com.habibfr.githubusersapp.ui.UserAdapter
-import com.habibfr.suitmedia_test_mobile.data.remote.Result
-import com.habibfr.suitmedia_test_mobile.data.remote.api.response.DataUser
+import com.habibfr.suitmedia_test_mobile.data.paging.LoadingStateAdapter
+import com.habibfr.suitmedia_test_mobile.data.remote.api.response.User
 import com.habibfr.suitmedia_test_mobile.databinding.ActivityThirdBinding
+import com.habibfr.suitmedia_test_mobile.view.adapter.UserAdapter
 import com.habibfr.suitmedia_test_mobile.view.factory.ViewModelFactory
 import com.habibfr.suitmedia_test_mobile.view.second.SecondActivity
 import com.habibfr.suitmedia_test_mobile.view.second.SharedViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class ThirdActivity : AppCompatActivity() {
     private lateinit var binding: ActivityThirdBinding
-    private lateinit var adapter: UserAdapter
+    private lateinit var userAdapter: UserAdapter
 
     private val thirdViewModel: ThirdViewModel by viewModels {
         ViewModelFactory.getInstance(this)
@@ -34,74 +35,53 @@ class ThirdActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         with(binding) {
+
             setSupportActionBar(topAppBar)
             topAppBar.setNavigationOnClickListener {
                 onBackPressed()
 
             }
 
-            val layoutManager = LinearLayoutManager(this@ThirdActivity)
-            rvUser.layoutManager = layoutManager
-            val itemDecoration =
-                DividerItemDecoration(this@ThirdActivity, layoutManager.orientation)
-            rvUser.addItemDecoration(itemDecoration)
-            rvUser.setHasFixedSize(true);
-        }
+            rvUser.layoutManager = LinearLayoutManager(this@ThirdActivity)
 
-        getUsers()
-    }
 
-    private fun getUsers() {
-        thirdViewModel.users.observe(this) { result ->
-            if (result != null) {
-                when (result) {
-                    is Result.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                    }
+            getData()
 
-                    is Result.Success -> {
-                        setupAdapter(result.data.data?.toMutableList())
-                        binding.progressBar.visibility = View.GONE
-                    }
-
-                    is Result.Error -> {
-                        binding.progressBar.visibility = View.GONE
-
-                        Snackbar.make(
-                            binding.root, result.error, Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
-                }
+            swipeRefreshLayout.setOnRefreshListener {
+                getData()
+                swipeRefreshLayout.isRefreshing = false
             }
+
+            userAdapter.setOnItemClickCallback(object : UserAdapter.OnItemClickCallback {
+                override fun onItemClicked(user: User) {
+                    user.firstName?.let {
+                        user.lastName?.let { it1 ->
+                            chooseUser(
+                                it, it1
+                            )
+                        }
+                    }
+                }
+            })
         }
     }
 
-    private fun setupAdapter(users: MutableList<DataUser?>?) {
-        with(binding) {
-            if (users != null) {
-                if (users.isEmpty()) {
+    private fun getData() {
+        userAdapter = UserAdapter()
+        binding.rvUser.adapter = userAdapter.withLoadStateFooter(
+            footer = LoadingStateAdapter { userAdapter.retry() }
+        )
 
-                    Snackbar.make(
-                        this@ThirdActivity, root, "Data Users empty...", Snackbar.LENGTH_SHORT
-                    ).show()
-                } else {
-                    adapter = UserAdapter()
-                    adapter.submitList(users)
-                    adapter.setOnItemClickCallback(object : UserAdapter.OnItemClickCallback {
+        // Show the loading animation initially
+        binding.progressBar.visibility = View.VISIBLE
 
-                        override fun onItemClicked(user: DataUser) {
-                            user.firstName?.let {
-                                user.lastName?.let { it1 ->
-                                    chooseUser(
-                                        it,
-                                        it1
-                                    )
-                                }
-                            }
-                        }
-                    })
-                    rvUser.adapter = adapter
-                }
+        // Simulate data loading delay using a coroutine
+        lifecycleScope.launch {
+            delay(1000) // Replace with actual data loading
+            thirdViewModel.usersPaginate.observe(this@ThirdActivity) { pagingData ->
+                userAdapter.submitData(lifecycle, pagingData)
+                // Hide the loading animation when data is loaded
+                binding.progressBar.visibility = View.GONE
             }
         }
     }

@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.swiperefreshlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -76,4 +77,11 @@ dependencies {
 
     // datastore
     implementation("androidx.datastore:datastore-preferences:1.1.1")
+
+    // Paging
+    implementation("androidx.paging:paging-runtime-ktx:3.1.0")
+
+
+    // swiper refresh
+//    with("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }

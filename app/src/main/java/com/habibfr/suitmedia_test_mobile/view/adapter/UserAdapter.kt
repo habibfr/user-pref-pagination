@@ -1,21 +1,21 @@
-package com.habibfr.githubusersapp.ui
+package com.habibfr.suitmedia_test_mobile.view.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.habibfr.suitmedia_test_mobile.data.remote.api.response.DataUser
+import com.habibfr.suitmedia_test_mobile.data.remote.api.response.User
 import com.habibfr.suitmedia_test_mobile.databinding.ItemUserBinding
 
 class UserAdapter() :
-    ListAdapter<DataUser, UserAdapter.MyViewHolder>(DIFF_CALLBACK) {
+    PagingDataAdapter<User, UserAdapter.MyViewHolder>(DIFF_CALLBACK) {
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     class MyViewHolder(val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: DataUser) {
+        fun bind(user: User) {
             Glide.with(itemView.context).load(user.avatar).into(binding.profileImage)
             binding.txtName.text = "${user.firstName} ${user.lastName}"
             binding.txtEmail.text = user.email
@@ -29,8 +29,15 @@ class UserAdapter() :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val users = getItem(position)
-        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(users) }
-        holder.bind(users)
+        holder.itemView.setOnClickListener {
+            if (users != null) {
+                onItemClickCallback.onItemClicked(users)
+            }
+        }
+        if (users != null) {
+            holder.bind(users)
+        }
+
     }
 
 
@@ -39,23 +46,23 @@ class UserAdapter() :
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(user: DataUser)
+        fun onItemClicked(user: User)
     }
 
     companion object {
-        val DIFF_CALLBACK: DiffUtil.ItemCallback<DataUser> =
-            object : DiffUtil.ItemCallback<DataUser>() {
+        val DIFF_CALLBACK: DiffUtil.ItemCallback<User> =
+            object : DiffUtil.ItemCallback<User>() {
                 override fun areItemsTheSame(
-                    oldItem: DataUser,
-                    newItem: DataUser
+                    oldItem: User,
+                    newItem: User
                 ): Boolean {
                     return oldItem.id == newItem.id
                 }
 
                 @SuppressLint("DiffUtilEquals")
                 override fun areContentsTheSame(
-                    oldItem: DataUser,
-                    newItem: DataUser
+                    oldItem: User,
+                    newItem: User
                 ): Boolean {
                     return oldItem == newItem
                 }
